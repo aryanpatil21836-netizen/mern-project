@@ -16,7 +16,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+      const { data } = await axios.get(`https://mern-project-85uj.onrender.com/api/products/${id}`);
 
       setName(data.name);
       setBrand(data.brand);
@@ -34,7 +34,7 @@ const EditProduct = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, {
+      await axios.put(`https://mern-project-85uj.onrender.com/api/products/${id}`, {
         name,
         brand,
         category,

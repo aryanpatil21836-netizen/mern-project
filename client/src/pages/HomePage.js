@@ -14,7 +14,7 @@ const HomePage = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://mern-project-85uj.onrender.com/api/products');
       setProducts(res.data);
     } catch (error) {
       console.log(error);

@@ -8,7 +8,7 @@ const AdminPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axios.get('https://mern-project-85uj.onrender.com');
       setProducts(data);
     } catch (error) {
       console.log(error);
@@ -31,7 +31,7 @@ const AdminPage = () => {
     if (!ok) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`https://mern-project-85uj.onrender.com/api/products/${id}`);
       alert('Product deleted');
       fetchProducts();
     } catch (error) {
