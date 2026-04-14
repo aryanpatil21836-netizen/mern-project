@@ -18,7 +18,7 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://mern-project-85uj.onrender.com/api/products", {
+      const res = await fetch("https://mern-project-85uj.onrender.com/api/v1/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +32,7 @@ function RegisterPage() {
         alert("Register successful");
         navigate("/login");
       } else {
-        alert(data.message);
+        alert(data.message || "Register failed");
       }
     } catch (error) {
       console.log(error);

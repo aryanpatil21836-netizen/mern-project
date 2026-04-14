@@ -17,7 +17,7 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://mern-project-85uj.onrender.com/api/products", {
+      const res = await fetch("https://mern-project-85uj.onrender.com/api/v1/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
