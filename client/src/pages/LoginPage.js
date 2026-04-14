@@ -28,7 +28,7 @@ function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        localStorage.setItem("userInfo", JSON.stringify(data.user));
         alert("Login successful");
         navigate("/admin");
       } else {

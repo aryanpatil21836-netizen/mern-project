@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const Product = require('./models/Product');
 
 dotenv.config();
 connectDB();
@@ -14,14 +16,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// test route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// product routes
 app.use('/api/products', productRoutes);
-const Product = require('./models/Product');
+app.use('/api/v1/user', userRoutes);
 
 app.get('/api/seed', async (req, res) => {
   try {
