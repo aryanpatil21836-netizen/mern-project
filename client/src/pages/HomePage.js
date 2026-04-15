@@ -13,14 +13,14 @@ const HomePage = () => {
   };
 
   const fetchProducts = async () => {
-    try {
-      const res = await axios.get('https://mern-project-85uj.onrender.com/api/products');
-      setProducts(res.data);
-    } catch (error) {
-      console.log(error);
-      alert('Products fetch nahi hue');
-    }
-  };
+  try {
+    const res = await axios.get('https://mern-project-85uj.onrender.com/api/v1/products');
+    setProducts(res.data);
+  } catch (error) {
+    console.log(error);
+    alert('Products fetch nahi hue');
+  }
+};
 
   useEffect(() => {
     fetchProducts();
