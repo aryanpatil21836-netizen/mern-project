@@ -12,17 +12,26 @@ const HomePage = () => {
     navigate('/login');
   };
 
- const fetchProducts = async () => {
+const fetchProducts = async () => {
   try {
     const res = await axios.get('https://mern-project-85uj.onrender.com/api/v1/products');
-    console.log(res.data); // debug
-    setProducts(res.data);
+    console.log('API RESPONSE:', res.data);
+
+    if (Array.isArray(res.data)) {
+      setProducts(res.data);
+    } else {
+      alert('Products array nahi aa raha');
+      console.log('Unexpected response:', res.data);
+    }
   } catch (error) {
-    console.log(error);
+    console.log('FETCH ERROR:', error);
+    if (error.response) {
+      console.log('ERROR RESPONSE DATA:', error.response.data);
+      console.log('ERROR STATUS:', error.response.status);
+    }
     alert('Products fetch nahi hue');
   }
 };
-
   useEffect(() => {
     fetchProducts();
   }, []);
