@@ -12,9 +12,10 @@ const HomePage = () => {
     navigate('/login');
   };
 
-  const fetchProducts = async () => {
+ const fetchProducts = async () => {
   try {
     const res = await axios.get('https://mern-project-85uj.onrender.com/api/v1/products');
+    console.log(res.data); // debug
     setProducts(res.data);
   } catch (error) {
     console.log(error);
