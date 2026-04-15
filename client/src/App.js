@@ -10,7 +10,6 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import RegisterPage from './pages/RegisterPage';
-import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -23,32 +22,9 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success" element={<OrderSuccessPage />} />
 
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <AdminPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/admin/create"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <CreateProduct />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/admin/edit/:id"
-          element={
-            <ProtectedRoute adminOnly={true}>
-              <EditProduct />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/create" element={<CreateProduct />} />
+        <Route path="/admin/edit/:id" element={<EditProduct />} />
       </Routes>
     </Router>
   );
