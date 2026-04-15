@@ -16,15 +16,22 @@ const EditProduct = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const { data } = await axios.get(`https://mern-project-85uj.onrender.com/api/products/${id}`);
+      try {
+        const { data } = await axios.get(
+          `https://mern-project-85uj.onrender.com/api/v1/products/${id}`
+        );
 
-      setName(data.name);
-      setBrand(data.brand);
-      setCategory(data.category);
-      setDescription(data.description);
-      setPrice(data.price);
-      setCountInStock(data.countInStock);
-      setImage(data.image);
+        setName(data.name || '');
+        setBrand(data.brand || '');
+        setCategory(data.category || '');
+        setDescription(data.description || '');
+        setPrice(data.price || '');
+        setCountInStock(data.countInStock || '');
+        setImage(data.image || '');
+      } catch (error) {
+        console.log(error);
+        alert('Product fetch failed');
+      }
     };
 
     fetchProduct();
@@ -34,15 +41,18 @@ const EditProduct = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`https://mern-project-85uj.onrender.com/api/products/${id}`, {
-        name,
-        brand,
-        category,
-        description,
-        price,
-        countInStock,
-        image,
-      });
+      await axios.put(
+        `https://mern-project-85uj.onrender.com/api/v1/products/${id}`,
+        {
+          name,
+          brand,
+          category,
+          description,
+          price,
+          countInStock,
+          image,
+        }
+      );
 
       alert('Product updated successfully');
       navigate('/admin');
@@ -57,7 +67,6 @@ const EditProduct = () => {
       <h2 className="mb-4">Edit Product</h2>
 
       <form onSubmit={submitHandler} className="card p-4 shadow">
-
         <div className="mb-3">
           <label className="form-label">Product Name</label>
           <input

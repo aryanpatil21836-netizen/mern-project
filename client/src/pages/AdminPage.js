@@ -11,16 +11,12 @@ const AdminPage = () => {
     navigate('/login');
   };
 
-  // ✅ FETCH PRODUCTS (FIXED)
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
-        'https://mern-project-85uj.onrender.com/api/products'
+        'https://mern-project-85uj.onrender.com/api/v1/products'
       );
 
-      console.log("API Response:", res.data);
-
-      // ✅ ensure array
       setProducts(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.log(error);
@@ -33,12 +29,11 @@ const AdminPage = () => {
     fetchProducts();
   }, []);
 
-  // ✅ DELETE PRODUCT
   const deleteHandler = async (id) => {
     if (window.confirm('Delete product?')) {
       try {
         await axios.delete(
-          `https://mern-project-85uj.onrender.com/api/products/${id}`
+          `https://mern-project-85uj.onrender.com/api/v1/products/${id}`
         );
         alert('Deleted');
         fetchProducts();
@@ -51,14 +46,13 @@ const AdminPage = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      {/* HEADER */}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h2>Admin Panel</h2>
         <button onClick={logoutHandler}>Logout</button>
       </div>
 
       <button
-        onClick={() => navigate('/create-product')}
+        onClick={() => navigate('/admin/create')}
         style={{
           marginTop: '10px',
           padding: '10px',
@@ -71,7 +65,6 @@ const AdminPage = () => {
         + Create Product
       </button>
 
-      {/* PRODUCTS LIST */}
       <div style={{ marginTop: '20px' }}>
         {Array.isArray(products) && products.length > 0 ? (
           products.map((product) => (
@@ -87,7 +80,7 @@ const AdminPage = () => {
               <p>₹{product.price}</p>
 
               <button
-                onClick={() => navigate(`/edit-product/${product._id}`)}
+                onClick={() => navigate(`/admin/edit/${product._id}`)}
                 style={{ marginRight: '10px' }}
               >
                 Edit

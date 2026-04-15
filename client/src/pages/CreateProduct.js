@@ -17,7 +17,7 @@ const CreateProduct = () => {
     e.preventDefault();
 
     try {
-      await axios.post('https://mern-project-85uj.onrender.com', {
+      await axios.post('https://mern-project-85uj.onrender.com/api/v1/products', {
         name,
         brand,
         category,
@@ -37,12 +37,9 @@ const CreateProduct = () => {
 
   return (
     <div style={{ padding: '20px', background: '#f5f5f5', minHeight: '100vh' }}>
-      
-      {/* HEADER */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
         <h2>Add Product</h2>
 
-        {/* BACK BUTTON */}
         <button
           onClick={() => navigate('/admin')}
           style={{
@@ -58,7 +55,6 @@ const CreateProduct = () => {
         </button>
       </div>
 
-      {/* FORM */}
       <form onSubmit={submitHandler} style={{ maxWidth: '400px' }}>
         <input
           type="text"
