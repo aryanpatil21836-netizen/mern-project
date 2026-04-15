@@ -46,52 +46,74 @@ const HomePage = () => {
 
   return (
     <div style={page}>
-      {/* HEADER */}
-      <div style={header}>
-        <h2 style={logo}>MyStore</h2>
+      <div style={topWrapper}>
+        {/* HEADER */}
+        <div style={header}>
+          <div style={brandBox}>
+            <h2 style={logo}>MyStore</h2>
+            <p style={tagline}>Shop smart. Look better.</p>
+          </div>
 
-        <input
-          type="text"
-          placeholder="Search products..."
-          style={searchBar}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+          <input
+            type="text"
+            placeholder="Search products..."
+            style={searchBar}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-        <div style={actions}>
-          <Link to="/admin">
-            <button style={btnSmall}>Admin</button>
-          </Link>
+          <div style={actions}>
+            <Link to="/admin">
+              <button style={btnAdmin}>Admin</button>
+            </Link>
 
-          <Link to="/cart">
-            <button style={btnCart}>Cart</button>
-          </Link>
+            <Link to="/cart">
+              <button style={btnCartTop}>Cart</button>
+            </Link>
 
-          <button onClick={logoutHandler} style={btnLogout}>
-            Logout
-          </button>
+            <button onClick={logoutHandler} style={btnLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
+
+        {/* HERO */}
+        <div style={hero}>
+          <div>
+            <h1 style={heroTitle}>Trending Products</h1>
+            <p style={heroText}>
+              Stylish collection with better mobile shopping experience
+            </p>
+          </div>
         </div>
       </div>
 
       {/* PRODUCTS */}
       <div style={container}>
-        <h2 style={title}>Products</h2>
+        <h2 style={title}>Latest Products</h2>
 
         <div style={grid}>
           {filteredProducts.map((product) => (
             <div key={product._id} style={card}>
-              <img src={product.image} alt="" style={image} />
+              <div style={imageWrapper}>
+                <span style={badge}>Hot</span>
+                <img src={product.image} alt={product.name} style={image} />
+              </div>
 
-              <h3 style={name}>{product.name}</h3>
+              <div style={cardBody}>
+                <h3 style={name}>{product.name}</h3>
 
-              <p style={price}>₹{product.price}</p>
+                <p style={subText}>{product.brand || 'Premium Brand'}</p>
 
-              <button
-                onClick={() => addToCartHandler(product)}
-                style={cartBtn}
-              >
-                Add to Cart
-              </button>
+                <p style={price}>₹{product.price}</p>
+
+                <button
+                  onClick={() => addToCartHandler(product)}
+                  style={cartBtn}
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -103,104 +125,194 @@ const HomePage = () => {
 export default HomePage;
 
 const page = {
-  backgroundColor: '#eaeded',
+  background: 'linear-gradient(to bottom, #f8fafc, #eef2f7)',
   minHeight: '100vh',
-  fontFamily: 'Arial',
+  fontFamily: 'Arial, sans-serif',
+};
+
+const topWrapper = {
+  padding: '12px',
 };
 
 const header = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '15px 25px',
-  backgroundColor: '#131921',
+  gap: '12px',
+  flexWrap: 'wrap',
+  padding: '16px',
+  borderRadius: '18px',
+  background: 'linear-gradient(135deg, #111827, #1f2937)',
   color: 'white',
+  boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+};
+
+const brandBox = {
+  display: 'flex',
+  flexDirection: 'column',
 };
 
 const logo = {
   margin: 0,
-  fontSize: '26px',
+  fontSize: '28px',
+  fontWeight: '800',
+  letterSpacing: '0.5px',
+};
+
+const tagline = {
+  margin: '4px 0 0 0',
+  fontSize: '13px',
+  color: '#d1d5db',
 };
 
 const searchBar = {
-  width: '40%',
-  padding: '10px',
-  borderRadius: '4px',
-  border: 'none',
+  flex: 1,
+  minWidth: '220px',
+  padding: '12px 14px',
+  borderRadius: '12px',
+  border: '1px solid #d1d5db',
+  outline: 'none',
+  fontSize: '14px',
 };
 
 const actions = {
   display: 'flex',
   gap: '10px',
+  flexWrap: 'wrap',
 };
 
-const btnSmall = {
-  backgroundColor: '#232f3e',
+const commonBtn = {
+  border: 'none',
+  padding: '10px 14px',
+  borderRadius: '12px',
+  cursor: 'pointer',
+  fontWeight: '700',
+  fontSize: '14px',
+};
+
+const btnAdmin = {
+  ...commonBtn,
+  backgroundColor: '#2563eb',
   color: 'white',
-  border: 'none',
-  padding: '8px 12px',
-  cursor: 'pointer',
 };
 
-const btnCart = {
-  backgroundColor: '#febd69',
-  border: 'none',
-  padding: '8px 12px',
-  cursor: 'pointer',
-  fontWeight: 'bold',
+const btnCartTop = {
+  ...commonBtn,
+  backgroundColor: '#f59e0b',
+  color: 'white',
 };
 
 const btnLogout = {
-  backgroundColor: 'black',
+  ...commonBtn,
+  backgroundColor: '#ef4444',
   color: 'white',
-  border: 'none',
-  padding: '8px 12px',
-  cursor: 'pointer',
+};
+
+const hero = {
+  marginTop: '14px',
+  borderRadius: '20px',
+  padding: '24px 18px',
+  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+  color: 'white',
+  boxShadow: '0 10px 24px rgba(37, 99, 235, 0.22)',
+};
+
+const heroTitle = {
+  margin: 0,
+  fontSize: '30px',
+  fontWeight: '800',
+};
+
+const heroText = {
+  marginTop: '8px',
+  fontSize: '14px',
+  color: '#e0e7ff',
 };
 
 const container = {
   maxWidth: '1400px',
   margin: 'auto',
-  padding: '20px',
+  padding: '16px',
 };
 
 const title = {
-  marginBottom: '20px',
+  marginBottom: '18px',
+  fontSize: '24px',
+  color: '#111827',
 };
 
 const grid = {
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-  gap: '20px',
+  gap: '18px',
 };
 
 const card = {
   backgroundColor: 'white',
-  padding: '15px',
-  borderRadius: '6px',
-  textAlign: 'center',
+  borderRadius: '18px',
+  overflow: 'hidden',
+  boxShadow: '0 10px 24px rgba(15, 23, 42, 0.08)',
+  border: '1px solid #e5e7eb',
+  transition: '0.3s',
+};
+
+const imageWrapper = {
+  position: 'relative',
+};
+
+const badge = {
+  position: 'absolute',
+  top: '10px',
+  left: '10px',
+  backgroundColor: '#ef4444',
+  color: 'white',
+  padding: '5px 10px',
+  borderRadius: '999px',
+  fontSize: '12px',
+  fontWeight: '700',
+  zIndex: 1,
 };
 
 const image = {
   width: '100%',
-  height: '180px',
+  height: '210px',
   objectFit: 'cover',
+  display: 'block',
+};
+
+const cardBody = {
+  padding: '14px',
+  textAlign: 'left',
 };
 
 const name = {
-  fontSize: '18px',
-  margin: '10px 0',
+  fontSize: '17px',
+  margin: '0 0 6px 0',
+  color: '#111827',
+  minHeight: '42px',
+};
+
+const subText = {
+  fontSize: '13px',
+  color: '#6b7280',
+  margin: '0 0 10px 0',
 };
 
 const price = {
-  fontWeight: 'bold',
-  marginBottom: '10px',
+  fontWeight: '800',
+  fontSize: '22px',
+  color: '#16a34a',
+  marginBottom: '12px',
 };
 
 const cartBtn = {
-  backgroundColor: '#ffd814',
+  background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+  color: 'white',
   border: 'none',
-  padding: '10px',
+  padding: '12px',
   cursor: 'pointer',
   width: '100%',
+  borderRadius: '12px',
+  fontWeight: '700',
+  fontSize: '14px',
 };

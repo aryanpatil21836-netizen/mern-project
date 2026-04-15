@@ -1,117 +1,107 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
-function LoginPage() {
+const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const changeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://mern-project-85uj.onrender.com/api/v1/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const { data } = await axios.post('http://localhost:5000/api/v1/user/login', {
+        email,
+        password,
       });
 
-      const data = await res.json();
+      // backend se jo data aaye usko save karo
+      localStorage.setItem('userInfo', JSON.stringify(data));
 
-      if (res.ok) {
-        localStorage.setItem("userInfo", JSON.stringify(data.user));
-        alert("Login successful");
-        navigate("/admin");
+      // admin hai to admin page
+      if (data.isAdmin) {
+        navigate('/admin');
       } else {
-        alert(data.message || "Login failed");
+        navigate('/');
       }
     } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
+      alert(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : 'Login failed'
+      );
     }
   };
 
   return (
-    <div style={pageStyle}>
-      <form onSubmit={submitHandler} style={formStyle}>
-        <h1>Login</h1>
+    <div style={container}>
+      <form onSubmit={submitHandler} style={form}>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h2>
 
         <input
           type="email"
-          name="email"
           placeholder="Enter email"
-          value={formData.email}
-          onChange={changeHandler}
-          style={inputStyle}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={input}
           required
         />
 
         <input
           type="password"
-          name="password"
           placeholder="Enter password"
-          value={formData.password}
-          onChange={changeHandler}
-          style={inputStyle}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={input}
           required
         />
 
-        <button type="submit" style={buttonStyle}>
+        <button type="submit" style={button}>
           Login
         </button>
 
-        <p>
+        <p style={{ textAlign: 'center', marginTop: '15px' }}>
           New user? <Link to="/register">Register</Link>
         </p>
       </form>
     </div>
   );
-}
-
-const pageStyle = {
-  minHeight: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "#f6f7fb",
 };
 
-const formStyle = {
-  width: "100%",
-  maxWidth: "400px",
-  backgroundColor: "white",
-  padding: "30px",
-  borderRadius: "12px",
-  boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
+const container = {
+  minHeight: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: '#f4f4f4',
 };
 
-const inputStyle = {
-  width: "100%",
-  padding: "12px",
-  marginBottom: "14px",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  boxSizing: "border-box",
+const form = {
+  width: '350px',
+  background: '#fff',
+  padding: '30px',
+  borderRadius: '10px',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
 };
 
-const buttonStyle = {
-  width: "100%",
-  padding: "12px",
-  backgroundColor: "#111827",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
-  marginBottom: "12px",
+const input = {
+  width: '100%',
+  padding: '12px',
+  marginBottom: '15px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+};
+
+const button = {
+  width: '100%',
+  padding: '12px',
+  background: '#000',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
 };
 
 export default LoginPage;

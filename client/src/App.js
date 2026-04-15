@@ -7,14 +7,10 @@ import CreateProduct from './pages/CreateProduct';
 import EditProduct from './pages/EditProduct';
 import LoginPage from './pages/LoginPage';
 import CartPage from './pages/CartPage';
-import ProtectedRoute from './components/ProtectedRoute';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
-
-// Register file jo naam hai uske hisaab se ek hi import rakho
 import RegisterPage from './pages/RegisterPage';
-// agar file ka naam Register.js hai to upar wali line hata ke ye use karo:
-// import RegisterPage from './pages/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -26,28 +22,29 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success" element={<OrderSuccessPage />} />
+
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute adminOnly={true}>
               <AdminPage />
             </ProtectedRoute>
           }
         />
 
         <Route
-          path="/create-product"
+          path="/admin/create"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute adminOnly={true}>
               <CreateProduct />
             </ProtectedRoute>
           }
         />
 
         <Route
-          path="/edit-product/:id"
+          path="/admin/edit/:id"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute adminOnly={true}>
               <EditProduct />
             </ProtectedRoute>
           }
