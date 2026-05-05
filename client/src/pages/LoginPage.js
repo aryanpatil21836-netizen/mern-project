@@ -12,11 +12,13 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/v1/user/login', {
-        email,
-        password,
-      });
-
+      const { data } = await axios.post(
+  'https://mern-project-85uj.onrender.com/api/v1/user/login',
+  {
+    email,
+    password,
+  }
+);
       // backend se jo data aaye usko save karo
       localStorage.setItem('userInfo', JSON.stringify(data));
 
